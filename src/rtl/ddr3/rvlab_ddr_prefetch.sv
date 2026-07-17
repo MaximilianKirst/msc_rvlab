@@ -75,7 +75,7 @@ module rvlab_ddr_prefetch #(
             assign addr_le_mask[i]     = entry_addrs[i] <= fe_req_i.a_address;
             assign valid_mask[i]       = addr_match_mask[i] && entry_states[i] == Valid;
             assign pending_mask[i]     = entry_states[i] == Pending;
-            assign non_pending_mask[i] = entry_states[i] != Pending;
+            assign non_pending_mask[i] = entry_states[i] != Pending && entry_states[i] != Stale;
             assign invalid_mask[i]     = entry_states[i] == Invalid;
         end : gen_masks
     endgenerate

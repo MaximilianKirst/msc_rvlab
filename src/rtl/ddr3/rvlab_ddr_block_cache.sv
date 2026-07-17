@@ -191,7 +191,7 @@ module rvlab_ddr_block_cache #(
       a_opcode: dirty_rdata ? PutFullData : Get,
       a_mask: 32'hFFFFFFFF,
       a_address: {dirty_rdata ? tag_rdata : access_tag_q, access_idx_q},
-      a_data: data_rdata_raw,
+      a_data: data_rdata,
       a_anc: ancillary_q
     };
   end
