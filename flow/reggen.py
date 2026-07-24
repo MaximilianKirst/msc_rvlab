@@ -4,6 +4,7 @@
 from pydesignflow import Block, task, Result
 import re
 from .tools.reggen_wrapper import run_reggen
+from .tools.reggen import gen_selfdoc
 
 class RegisterGenerator(Block):
     """Register generator using OpenTitan's reggen"""
@@ -47,4 +48,15 @@ class RegisterGenerator(Block):
             run_reggen(input_hjson_fn, pkg_sv, top_sv, header, html)
             r.rtl_srcs += [pkg_sv, top_sv]
             
+        return r
+    
+
+    @task()
+    def documentation(self, cwd):
+        """Generate reggen register-format self-documentation (Markdown)"""
+        r = Result()
+        r.doc = cwd / 'regtool_doc.md'
+        with open(r.doc, 'w') as f:
+            gen_selfdoc.document(f)
+        print(f"Wrote reggen self-documentation to {r.doc}")
         return r
